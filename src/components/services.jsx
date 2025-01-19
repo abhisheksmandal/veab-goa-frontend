@@ -16,7 +16,7 @@ export const Services = (props) => {
         </Box>
 
         {/* Services Card Grid */}
-        <SimpleGrid columns={{ base: 1, md: 3 }} spacing={8}>
+        <SimpleGrid columns={{ base: 1, md: 3 }} spacing={2}>
           {props.data
             ? props.data.map((d, i) => (
                 <Box
