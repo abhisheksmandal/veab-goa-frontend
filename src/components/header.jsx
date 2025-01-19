@@ -11,8 +11,8 @@ export const Header = ({ data }) => {
   return (
     <Box
       id="header"
-      h="100vh"
-      bgImage="url('/header-bg.jpg')" // Add your background image
+      h="90vh"
+      bgImage="img/intro-bg.jpg" // Add your background image
       bgSize="cover"
       bgPosition="center"
       position="relative"
@@ -55,7 +55,7 @@ export const Header = ({ data }) => {
             {data?.paragraph || "It's nice to meet you"}
           </Text>
 
-          <Button size="lg" colorScheme="blue" mt={4} as="a" href="#services">
+          <Button size="lg" colorScheme="blue" mt={4} as="a" href="#features">
             {data?.buttonText || "TELL ME MORE"}
           </Button>
         </VStack>

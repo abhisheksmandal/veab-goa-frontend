@@ -2,20 +2,29 @@ import { Box, useColorMode } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { Navigation } from "./components/navigation";
 import { Header } from "./components/header";
+import { Features } from "./components/features";
+import { About } from "./components/about";
 import JsonData from "./data/data.json";
 import SmoothScroll from "smooth-scroll";
-
-export const scroll = new SmoothScroll('a[href*="#"]', {
-  speed: 1000,
-  speedAsDuration: true,
-});
 
 function App() {
   const { colorMode } = useColorMode();
   const [landingPageData, setLandingPageData] = useState({});
 
   useEffect(() => {
+    // Set the landing page data from the JSON file
     setLandingPageData(JsonData);
+
+    // Initialize smooth scrolling after the component mounts
+    const scroll = new SmoothScroll('a[href*="#"]', {
+      speed: 1000,
+      speedAsDuration: true,
+    });
+
+    // Cleanup smooth scroll on unmount to avoid memory leaks
+    return () => {
+      scroll.destroy();
+    };
   }, []);
 
   return (
@@ -26,7 +35,8 @@ function App() {
     >
       <Navigation />
       <Header data={landingPageData.Header} />
-      {/* Other components will go here */}
+      <Features data={landingPageData.Features} />
+      <About data={landingPageData.About} />
     </Box>
   );
 }
