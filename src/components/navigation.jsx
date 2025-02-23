@@ -16,41 +16,16 @@ import { motion } from "framer-motion";
 const MotionBox = motion(Box);
 const MotionLink = motion(Link);
 
-export const Navigation = () => {
+export const Navigation = ({ activeSection }) => {
   const { isOpen, onToggle } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
-
-  const menuVariants = {
-    open: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.3, staggerChildren: 0.1 },
-    },
-    closed: {
-      opacity: 0,
-      y: -20,
-      transition: { duration: 0.3 },
-    },
-  };
-
-  const linkVariants = {
-    open: {
-      opacity: 1,
-      x: 0,
-      transition: { duration: 0.3 },
-    },
-    closed: {
-      opacity: 0,
-      x: -20,
-      transition: { duration: 0.3 },
-    },
-  };
 
   const navItems = [
     { name: "Features", href: "#features" },
     { name: "About", href: "#about" },
     { name: "Services", href: "#services" },
     { name: "Gallery", href: "#gallery" },
+    { name: "Testimonials", href: "#testimonials" },
     { name: "Team", href: "#team" },
     { name: "Contact", href: "#contact" },
   ];
@@ -103,19 +78,25 @@ export const Navigation = () => {
                 href={item.href}
                 fontSize="md"
                 fontWeight="medium"
-                color={colorMode === "light" ? "gray.600" : "gray.300"}
                 position="relative"
+                color={
+                  activeSection === item.href.substring(1)
+                    ? colorMode === "light"
+                      ? "blue.600"
+                      : "blue.300"
+                    : colorMode === "light"
+                    ? "gray.600"
+                    : "gray.300"
+                }
                 _hover={{
                   textDecoration: "none",
                   color: colorMode === "light" ? "blue.500" : "blue.300",
-                  _after: {
-                    width: "100%", // Ensure this is inside the same _hover block
-                  },
                 }}
                 _after={{
                   content: '""',
                   position: "absolute",
-                  width: "0%",
+                  width:
+                    activeSection === item.href.substring(1) ? "100%" : "0%",
                   height: "2px",
                   bottom: "-4px",
                   left: "0",
@@ -128,12 +109,10 @@ export const Navigation = () => {
             ))}
           </Flex>
 
-          {/* Right Section: Theme Toggle & Contact Button */}
+          {/* Right Section: Theme Toggle & Mobile Menu */}
           <Flex align="center" gap={4}>
             <IconButton
-              aria-label={`Switch to ${
-                colorMode === "light" ? "dark" : "light"
-              } mode`}
+              aria-label="Toggle Theme"
               icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
               onClick={toggleColorMode}
               variant="ghost"
@@ -142,22 +121,6 @@ export const Navigation = () => {
                 bg: colorMode === "light" ? "gray.100" : "gray.700",
               }}
             />
-
-            {/* <Button
-              display={{ base: "none", md: "inline-flex" }}
-              colorScheme="blue"
-              size="md"
-              fontWeight="medium"
-              px={6}
-              rounded="full"
-              _hover={{
-                transform: "translateY(-2px)",
-                boxShadow: "lg",
-              }}
-              transition="all 0.3s ease"
-            >
-              Get Started
-            </Button> */}
 
             <IconButton
               display={{ base: "flex", md: "none" }}
@@ -175,29 +138,15 @@ export const Navigation = () => {
                 bg: colorMode === "light" ? "gray.100" : "gray.700",
               }}
               aria-label="Toggle Navigation"
-              transition="all 0.3s"
-              transform={isOpen ? "rotate(180deg)" : ""}
             />
           </Flex>
         </Flex>
 
         {/* Mobile Navigation Menu */}
         <Collapse in={isOpen} animateOpacity>
-          <MotionBox
-            initial="closed"
-            animate={isOpen ? "open" : "closed"}
-            variants={menuVariants}
-            py={4}
-            px={4}
-            display={{ base: "block", md: "none" }}
-          >
+          <MotionBox py={4} px={4} display={{ base: "block", md: "none" }}>
             {navItems.map((item) => (
-              <MotionBox
-                key={item.name}
-                variants={linkVariants}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
+              <MotionBox key={item.name} whileHover={{ scale: 1.02 }}>
                 <Link
                   href={item.href}
                   display="block"
@@ -207,8 +156,8 @@ export const Navigation = () => {
                   fontWeight="medium"
                   color={colorMode === "light" ? "gray.600" : "gray.300"}
                   _hover={{
-                    bg: colorMode === "light" ? "gray.50" : "gray.700",
-                    color: colorMode === "light" ? "blue.500" : "blue.300",
+                    bg: "gray.50",
+                    color: "blue.500",
                     textDecoration: "none",
                   }}
                 >
@@ -216,21 +165,6 @@ export const Navigation = () => {
                 </Link>
               </MotionBox>
             ))}
-            {/* <Button
-              mt={4}
-              w="full"
-              colorScheme="blue"
-              size="md"
-              fontWeight="medium"
-              rounded="full"
-              _hover={{
-                transform: "translateY(-2px)",
-                boxShadow: "lg",
-              }}
-              transition="all 0.3s ease"
-            >
-              Get Started
-            </Button> */}
           </MotionBox>
         </Collapse>
       </Container>
