@@ -85,7 +85,7 @@ export const Navigation = () => {
               }}
             >
               <Text fontSize="2xl" fontWeight="extrabold">
-                LOGO
+                VEAB
               </Text>
             </Link>
           </Flex>
@@ -108,6 +108,9 @@ export const Navigation = () => {
                 _hover={{
                   textDecoration: "none",
                   color: colorMode === "light" ? "blue.500" : "blue.300",
+                  _after: {
+                    width: "100%", // Ensure this is inside the same _hover block
+                  },
                 }}
                 _after={{
                   content: '""',
@@ -118,11 +121,6 @@ export const Navigation = () => {
                   left: "0",
                   bg: colorMode === "light" ? "blue.500" : "blue.300",
                   transition: "all 0.3s ease",
-                }}
-                _hover={{
-                  _after: {
-                    width: "100%",
-                  },
                 }}
               >
                 {item.name}
